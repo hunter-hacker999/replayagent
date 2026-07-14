@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ReplyAgent — AI Email Replies for Real Estate Agents</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    /* ── Tokens ── */
+    :root {
+      --blue: #1a73e8;
+      --blue-dark: #1557b0;
+      --blue-light: #e8f0fe;
+      --ink: #0f1923;
+      --ink-2: #3d4a56;
+      --ink-3: #6b7885;
+      --rule: #e4e8ec;
+      --surface: #f7f9fc;
+      --white: #ffffff;
+      --green: #137333;
+      --green-bg: #e6f4ea;
+      --red: #c5221f;
+      --red-bg: #fce8e6;
+      --radius: 10px;
+      --shadow: 0 2px 16px rgba(15,25,35,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--white);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* ── Nav ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      border-bottom: 1px solid var(--rule);
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--ink);
+      letter-spacing: -0.3px;
+    }
+
+    .nav-logo span { color: var(--blue); }
+
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a { font-size: 14px; color: var(--ink-2); text-decoration: none; }
+    .nav-links a:hover { color: var(--blue); }
+
+    .btn {
+      padding: 9px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s;
+    }
+    .btn-primary { background: var(--blue); color: white; }
+    .btn-primary:hover { background: var(--blue-dark); }
+    .btn-ghost { background: transparent; color: var(--ink-2); border: 1px solid var(--rule); }
+    .btn-ghost:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 80px 24px 60px;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--blue-light);
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(36px, 5vw, 58px);
+      line-height: 1.12;
+      color: var(--ink);
+      letter-spacing: -0.5px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--blue);
+    }
+
+    .hero p {
+      font-size: 17px;
+      color: var(--ink-2);
+      line-height: 1.7;
+      max-width: 560px;
+      margin: 0 auto 36px;
+    }
+
+    /* ── Auth card ── */
+    .auth-section {
+      max-width: 420px;
+      margin: 0 auto 80px;
+    }
+
+    .auth-card {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-radius: 16px;
+      padding: 36px;
+      box-shadow: var(--shadow);
+    }
+
+    .auth-tabs {
+      display: flex;
+      background: var(--surface);
+      border-radius: 8px;
+      padding: 3px;
+      margin-bottom: 28px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      background: transparent;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-3);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .auth-tab.active {
+      background: var(--white);
+      color: var(--ink);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    .form-group { margin-bottom: 16px; }
+
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-2);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 11px 13px;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.15s;
+      font-family: inherit;
+    }
+
+    .form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,115,232,0.1); }
+
+    .form-input.code-input {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 8px;
+      text-align: center;
+      color: var(--blue);
+    }
+
+    .btn-full {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: var(--blue);
+      color: white;
+      transition: background 0.15s;
+      font-family: inherit;
+    }
+
+    .btn-full:hover { background: var(--blue-dark); }
+    .btn-full:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .btn-link {
+      background: none;
+      border: none;
+      color: var(--blue);
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: underline;
+      font-family: inherit;
+      padding: 0;
+    }
+
+    .auth-footer {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--ink-3);
+    }
+
+    .alert {
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .alert-success { background: var(--green-bg); color: var(--green); }
+    .alert-error { background: var(--red-bg); color: var(--red); }
+    .alert-info { background: var(--blue-light); color: var(--blue); }
+
+    /* ── Success state ── */
+    .success-card {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .success-icon { font-size: 48px; margin-bottom: 16px; }
+    .success-card h2 { font-family: 'Instrument Serif', serif; font-size: 26px; margin-bottom: 8px; color: var(--ink); }
+    .success-card p { font-size: 14px; color: var(--ink-2); line-height: 1.6; margin-bottom: 20px; }
+
+    .steps-list {
+      background: var(--surface);
+      border-radius: 10px;
+      padding: 16px 20px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--ink-2);
+      line-height: 1.5;
+    }
+
+    .step-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── Social proof ── */
+    .proof {
+      background: var(--surface);
+      border-top: 1px solid var(--rule);
+      padding: 60px 24px;
+    }
+
+    .proof-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .proof-label {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--ink-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 40px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .feature {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: 22px;
+    }
+
+    .feature-icon { font-size: 24px; margin-bottom: 10px; }
+    .feature h3 { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+    .feature p { font-size: 13px; color: var(--ink-3); line-height: 1.6; }
+
+    /* ── Footer ── */
+    footer {
+      padding: 32px 48px;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--ink-3);
+    }
+
+    .spinner {
+      width: 18px; height: 18px;
+      border: 2px solid #e0e0e0;
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 600px) {
+      nav { padding: 14px 20px; }
+      .nav-links { gap: 16px; }
+      .hero { padding: 48px 20px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-logo">Reply<span>Agent</span></div>
+  <div class="nav-links">
+    <a href="#how-it-works">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <button class="btn btn-ghost" onclick="document.getElementById('auth-card').scrollIntoView({behavior:'smooth'})">Sign in</button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-eyebrow">✉️ For Real Estate Agents</div>
+  <h1>Reply to every client email<br>in <em>30 seconds</em></h1>
+  <p>AI drafts that sound exactly like you — buyer follow-ups, offer responses, inspection emails. Built for agents, not inboxes.</p>
+</section>
+
+<!-- Auth Card -->
+<div class="auth-section" id="auth-card">
+  <div class="auth-card" id="card-login">
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="showTab('login')">Sign in</button>
+      <button class="auth-tab" onclick="showTab('signup')">Create account</button>
+    </div>
+
+    <!-- Alert area -->
+    <div id="alert" style="display:none" class="alert"></div>
+
+    <!-- Email step -->
+    <div id="step-email">
+      <div class="form-group">
+        <label class="form-label">Email address</label>
+        <input class="form-input" type="email" id="email-input" placeholder="you@gmail.com"
+          onkeydown="if(event.key==='Enter') sendCode()" />
+      </div>
+      <button class="btn-full" id="send-btn" onclick="sendCode()">Send login code →</button>
+      <div class="auth-footer">We'll email you a one-time code. No password needed.</div>
+    </div>
+
+    <!-- OTP step -->
+    <div id="step-otp" style="display:none">
+      <div id="otp-info" class="alert alert-info" style="margin-bottom:16px"></div>
+      <div class="form-group">
+        <label class="form-label">Your login code</label>
+        <input class="form-input code-input" type="text" inputmode="numeric"
+          id="otp-input" placeholder="·······" maxlength="8"
+          oninput="this.value=this.value.replace(/\D/g,'')"
+          onkeydown="if(event.key==='Enter') verifyCode()" />
+      </div>
+      <button class="btn-full" id="verify-btn" onclick="verifyCode()">Verify & sign in →</button>
+      <div class="auth-footer" style="margin-top:12px">
+        <button class="btn-link" onclick="goBack()">← Different email or resend code</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success state (hidden initially) -->
+  <div class="auth-card" id="card-success" style="display:none">
+    <div class="success-card">
+      <div class="success-icon">🎉</div>
+      <h2>You're signed in!</h2>
+      <p>Open Gmail in this browser and the ReplyAgent sidebar will activate automatically when you click any email.</p>
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-dot">1</div>
+          <span>Open <strong>mail.google.com</strong> in this Chrome window</span>
+        </div>
+        <div class="step-item">
+          <div class="step-dot">2</div>
+          <span>Click any <strong>received email</strong> in your inbox</span>
+        </div>
+        <div class="step-item">
+          <div class="step-dot">3</div>
+          <span>ReplyAgent sidebar appears on the <strong>right side</strong></span>
+        </div>
+        <div class="step-item">
+          <div class="step-dot">4</div>
+          <span>Click <strong>Generate</strong> → AI writes your reply in seconds</span>
+        </div>
+      </div>
+      <a href="https://mail.google.com" target="_blank">
+        <button class="btn-full" style="margin-top:20px">Open Gmail →</button>
+      </a>
+      <button class="btn-link" style="margin-top:12px;display:block" onclick="signOut()">Sign out</button>
+    </div>
+  </div>
+</div>
+
+<!-- Features -->
+<section class="proof" id="how-it-works">
+  <div class="proof-inner">
+    <div class="proof-label">Why agents use ReplyAgent</div>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🏷️</div>
+        <h3>Knows email types</h3>
+        <p>Auto-detects buyer inquiries, offer responses, inspection emails, post-close follow-ups — and writes the right reply for each.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🎭</div>
+        <h3>Sounds like you</h3>
+        <p>Every draft includes your name, brokerage, and phone. Warm, professional, or urgent — you choose the tone.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⚡</div>
+        <h3>One click to Gmail</h3>
+        <p>Hit Insert and the draft appears directly in your Gmail reply box. Edit, send. Done in 30 seconds.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔒</div>
+        <h3>Private by design</h3>
+        <p>Your emails are never stored. The AI reads the thread, writes the reply, and forgets it immediately.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section style="padding:60px 24px; max-width:900px; margin:0 auto;" id="pricing">
+  <div style="text-align:center; margin-bottom:40px;">
+    <div class="proof-label">Simple pricing</div>
+    <h2 style="font-family:'Instrument Serif',serif; font-size:32px; color:var(--ink); margin-top:8px;">No surprises. Cancel anytime.</h2>
+  </div>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; max-width:600px; margin:0 auto;">
+    <div style="border:1px solid var(--rule); border-radius:12px; padding:28px;">
+      <div style="font-size:13px; font-weight:600; color:var(--ink-3); margin-bottom:8px;">FREE</div>
+      <div style="font-size:36px; font-weight:700; color:var(--ink); margin-bottom:4px;">$0</div>
+      <div style="font-size:13px; color:var(--ink-3); margin-bottom:20px;">15 drafts / month</div>
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:8px; font-size:13px; color:var(--ink-2);">
+        <li>✓ All email types</li>
+        <li>✓ Tone selector</li>
+        <li>✓ Insert to Gmail</li>
+      </ul>
+    </div>
+    <div style="border:2px solid var(--blue); border-radius:12px; padding:28px; position:relative;">
+      <div style="position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--blue); color:white; font-size:11px; font-weight:700; padding:3px 12px; border-radius:20px;">MOST POPULAR</div>
+      <div style="font-size:13px; font-weight:600; color:var(--blue); margin-bottom:8px;">PRO</div>
+      <div style="font-size:36px; font-weight:700; color:var(--ink); margin-bottom:4px;">$19<span style="font-size:16px;font-weight:400;">/mo</span></div>
+      <div style="font-size:13px; color:var(--ink-3); margin-bottom:20px;">Unlimited drafts</div>
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:8px; font-size:13px; color:var(--ink-2);">
+        <li>✓ Everything in Free</li>
+        <li>✓ Unlimited drafts</li>
+        <li>✓ Priority support</li>
+        <li>✓ New features first</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div style="font-family:'Instrument Serif',serif; font-size:16px;">Reply<span style="color:var(--blue)">Agent</span></div>
+  <div>© 2026 ReplyAgent · <a href="#" style="color:var(--ink-3);">Privacy</a></div>
+</footer>
+
+<script>
+  // ── Config — replace with your actual Supabase values ──────────────────────
+  const SUPABASE_URL = 'https://YOUR_PROJECT_ID.supabase.co'
+  const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'
+
+  let currentEmail = ''
+  let currentTab = 'login'
+
+  // ── Load Supabase JS from CDN ─────────────────────────────────────────────
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js'
+  script.onload = initSupabase
+  document.head.appendChild(script)
+
+  let sb = null
+
+  function initSupabase() {
+    sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+    // Check if already signed in
+    sb.auth.getSession().then(({ data }) => {
+      if (data.session?.user) showSuccess(data.session.user)
+    })
+    // Listen for auth changes (e.g. after OTP verify)
+    sb.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session?.user) {
+        showSuccess(session.user)
+      }
+    })
+  }
+
+  function showTab(tab) {
+    currentTab = tab
+    document.querySelectorAll('.auth-tab').forEach((t, i) => {
+      t.classList.toggle('active', (i === 0 && tab === 'login') || (i === 1 && tab === 'signup'))
+    })
+    clearAlert()
+  }
+
+  function showAlert(msg, type = 'error') {
+    const el = document.getElementById('alert')
+    el.className = `alert alert-${type}`
+    el.textContent = msg
+    el.style.display = 'block'
+  }
+
+  function clearAlert() {
+    document.getElementById('alert').style.display = 'none'
+  }
+
+  function setLoading(btnId, loading, text) {
+    const btn = document.getElementById(btnId)
+    btn.disabled = loading
+    btn.innerHTML = loading ? `<span class="spinner"></span>${text}` : text
+  }
+
+  async function sendCode() {
+    const email = document.getElementById('email-input').value.trim()
+    if (!email) { showAlert('Please enter your email address.'); return }
+    currentEmail = email
+    clearAlert()
+    setLoading('send-btn', true, 'Sending…')
+
+    const { error } = await sb.auth.signInWithOtp({
+      email,
+      options: { shouldCreateUser: true }
+    })
+
+    setLoading('send-btn', false, 'Send login code →')
+
+    if (error) { showAlert(error.message); return }
+
+    // Switch to OTP step
+    document.getElementById('step-email').style.display = 'none'
+    document.getElementById('step-otp').style.display = 'block'
+    document.getElementById('otp-info').textContent = `Code sent to ${email}. Check your inbox (and spam folder).`
+    document.getElementById('otp-input').focus()
+    clearAlert()
+  }
+
+  async function verifyCode() {
+    const code = document.getElementById('otp-input').value.trim()
+    if (!code) { showAlert('Please enter the code from your email.'); return }
+    clearAlert()
+    setLoading('verify-btn', true, 'Verifying…')
+
+    const { data, error } = await sb.auth.verifyOtp({
+      email: currentEmail,
+      token: code,
+      type: 'email'
+    })
+
+    setLoading('verify-btn', false, 'Verify & sign in →')
+
+    if (error) {
+      showAlert('Invalid or expired code. Try requesting a new one.')
+      return
+    }
+
+    if (data.user) showSuccess(data.user)
+  }
+
+  function showSuccess(user) {
+    document.getElementById('card-login').style.display = 'none'
+    document.getElementById('card-success').style.display = 'block'
+    console.log('Signed in:', user.email)
+  }
+
+  function goBack() {
+    document.getElementById('step-otp').style.display = 'none'
+    document.getElementById('step-email').style.display = 'block'
+    document.getElementById('otp-input').value = ''
+    clearAlert()
+  }
+
+  async function signOut() {
+    await sb.auth.signOut()
+    document.getElementById('card-success').style.display = 'none'
+    document.getElementById('card-login').style.display = 'block'
+    document.getElementById('step-email').style.display = 'block'
+    document.getElementById('step-otp').style.display = 'none'
+    document.getElementById('email-input').value = ''
+  }
+</script>
+
+</body>
+</html>
