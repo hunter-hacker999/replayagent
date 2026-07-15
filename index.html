@@ -399,24 +399,21 @@
     </div>
 
     <!-- OTP step -->
-   <!-- OTP step -->
     <div id="step-otp" style="display:none">
       <div id="otp-info" class="alert alert-info" style="margin-bottom:16px"></div>
       <div class="form-group">
         <label class="form-label">Your login code</label>
-        
-        <!-- Removed maxlength="6" and updated placeholder -->
         <input class="form-input code-input" type="text" inputmode="numeric"
-          id="otp-input" placeholder="Enter code" 
+          id="otp-input" placeholder="Enter code"
           oninput="this.value=this.value.replace(/\D/g,'')"
           onkeydown="if(event.key==='Enter') verifyCode()" />
-          
       </div>
       <button class="btn-full" id="verify-btn" onclick="verifyCode()">Verify & sign in →</button>
       <div class="auth-footer" style="margin-top:12px">
         <button class="btn-link" onclick="goBack()">← Different email or resend code</button>
       </div>
     </div>
+  </div>
 
   <!-- Success state (hidden initially) -->
   <div class="auth-card" id="card-success" style="display:none">
@@ -510,20 +507,18 @@
 
 <script>
   // ── CONFIGURATION (REPLACE WITH YOUR REAL DETAILS) ────────────────────────
-  const SUPABASE_URL = 'https://rkwpzubygaaqkrbyyhmu.supabase.co'
+  const SUPABASE_URL = 'https://rkwpzubygaaqkrbyyhmu.supabase.co''
   const SUPABASE_ANON_KEY = 'sb_publishable_V_pzVGdCZNm9KTYcM-uYdg_hEEYJmIU'
-  const EXTENSION_ID = 'ffcbkeipcfkkgafnflapocbhlchlaioc' // Add your Extension ID!
+  const EXTENSION_ID = 'ffcbkeipcfkkgafnflapocbhlchlaioc'' 
   // ──────────────────────────────────────────────────────────────────────────
 
   let currentEmail = ''
   let currentTab = 'login'
   let sb = null
 
-  // Initialize client safely now that scripts are loaded
   if (typeof supabase !== 'undefined') {
     sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
     
-    // Check local session
     sb.auth.getSession().then(({ data }) => {
       if (data.session?.user) {
         sendTokenToExtension(data.session)
@@ -566,7 +561,6 @@
     btn.innerHTML = loading ? `<span class="spinner"></span>${text}` : text
   }
 
-  // Ensure this sendCode function is present!
   async function sendCode() {
     const email = document.getElementById('email-input').value.trim()
     if (!email) { showAlert('Please enter your email address.'); return }
@@ -590,7 +584,6 @@
     clearAlert()
   }
 
-  // Your updated bulletproof verifyCode function
   async function verifyCode() {
     const code = document.getElementById('otp-input').value.trim()
     if (!code) { showAlert('Please enter the code from your email.'); return }
@@ -621,7 +614,6 @@
     }
   }
 
-  // Communicate securely with the background script worker
   function sendTokenToExtension(sessionData) {
     if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.sendMessage) {
       chrome.runtime.sendMessage(
