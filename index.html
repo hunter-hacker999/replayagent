@@ -399,21 +399,24 @@
     </div>
 
     <!-- OTP step -->
+   <!-- OTP step -->
     <div id="step-otp" style="display:none">
       <div id="otp-info" class="alert alert-info" style="margin-bottom:16px"></div>
       <div class="form-group">
         <label class="form-label">Your login code</label>
+        
+        <!-- Removed maxlength="6" and updated placeholder -->
         <input class="form-input code-input" type="text" inputmode="numeric"
-          id="otp-input" placeholder="······" maxlength="6"
+          id="otp-input" placeholder="Enter code" 
           oninput="this.value=this.value.replace(/\D/g,'')"
           onkeydown="if(event.key==='Enter') verifyCode()" />
+          
       </div>
       <button class="btn-full" id="verify-btn" onclick="verifyCode()">Verify & sign in →</button>
       <div class="auth-footer" style="margin-top:12px">
         <button class="btn-link" onclick="goBack()">← Different email or resend code</button>
       </div>
     </div>
-  </div>
 
   <!-- Success state (hidden initially) -->
   <div class="auth-card" id="card-success" style="display:none">
