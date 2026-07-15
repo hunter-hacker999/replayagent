@@ -512,7 +512,7 @@
   // ── CONFIGURATION (REPLACE WITH YOUR REAL DETAILS) ────────────────────────
   const SUPABASE_URL = 'https://rkwpzubygaaqkrbyyhmu.supabase.co'
   const SUPABASE_ANON_KEY = 'sb_publishable_V_pzVGdCZNm9KTYcM-uYdg_hEEYJmIU'
-  const EXTENSION_ID = 'YOUR_CHROME_EXTENSION_ID_HERE' 
+  const EXTENSION_ID = 'YOUR_CHROME_EXTENSION_ID_HERE' // Add your Extension ID!
   // ──────────────────────────────────────────────────────────────────────────
 
   let currentEmail = ''
@@ -566,6 +566,7 @@
     btn.innerHTML = loading ? `<span class="spinner"></span>${text}` : text
   }
 
+  // Ensure this sendCode function is present!
   async function sendCode() {
     const email = document.getElementById('email-input').value.trim()
     if (!email) { showAlert('Please enter your email address.'); return }
@@ -589,24 +590,22 @@
     clearAlert()
   }
 
-async function verifyCode() {
+  // Your updated bulletproof verifyCode function
+  async function verifyCode() {
     const code = document.getElementById('otp-input').value.trim()
     if (!code) { showAlert('Please enter the code from your email.'); return }
     clearAlert()
     setLoading('verify-btn', true, 'Verifying…')
 
     try {
-      // Attempt to verify with Supabase
       const { data, error } = await sb.auth.verifyOtp({
         email: currentEmail,
         token: code,
         type: 'email'
       })
 
-      // If Supabase returns an official error, throw it to the catch block
       if (error) throw error;
 
-      // If successful, pass token to extension and show success screen
       if (data && data.session) {
         sendTokenToExtension(data.session)
         showSuccess(data.user)
@@ -616,17 +615,9 @@ async function verifyCode() {
 
     } catch (err) {
       console.error("[Verify Error]:", err);
-      // Display the actual error on the screen
       showAlert(err.message || 'Network error: Could not verify code. Please check your console.');
     } finally {
-      // This ALWAYS runs, ensuring the spinner stops no matter what happens
       setLoading('verify-btn', false, 'Verify & sign in →')
-    }
-  }
-
-    if (data.session) {
-      sendTokenToExtension(data.session)
-      showSuccess(data.user)
     }
   }
 
