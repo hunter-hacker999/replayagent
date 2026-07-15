@@ -404,7 +404,7 @@
       <div class="form-group">
         <label class="form-label">Your login code</label>
         <input class="form-input code-input" type="text" inputmode="numeric"
-          id="otp-input" placeholder="·······" maxlength="8"
+          id="otp-input" placeholder="······" maxlength="6"
           oninput="this.value=this.value.replace(/\D/g,'')"
           onkeydown="if(event.key==='Enter') verifyCode()" />
       </div>
@@ -420,29 +420,18 @@
     <div class="success-card">
       <div class="success-icon">🎉</div>
       <h2>You're signed in!</h2>
-      <p>Open Gmail in this browser and the ReplyAgent sidebar will activate automatically when you click any email.</p>
+      <p>The ReplyAgent extension has been successfully authenticated. You can close this window now.</p>
       <div class="steps-list">
         <div class="step-item">
           <div class="step-dot">1</div>
-          <span>Open <strong>mail.google.com</strong> in this Chrome window</span>
+          <span>Return to your open <strong>Gmail</strong> tab.</span>
         </div>
         <div class="step-item">
           <div class="step-dot">2</div>
-          <span>Click any <strong>received email</strong> in your inbox</span>
-        </div>
-        <div class="step-item">
-          <div class="step-dot">3</div>
-          <span>ReplyAgent sidebar appears on the <strong>right side</strong></span>
-        </div>
-        <div class="step-item">
-          <div class="step-dot">4</div>
-          <span>Click <strong>Generate</strong> → AI writes your reply in seconds</span>
+          <span>The sidebar has already unlocked automatically!</span>
         </div>
       </div>
-      <a href="https://mail.google.com" target="_blank">
-        <button class="btn-full" style="margin-top:20px">Open Gmail →</button>
-      </a>
-      <button class="btn-link" style="margin-top:12px;display:block" onclick="signOut()">Sign out</button>
+      <button class="btn-link" style="margin-top:20px;display:block;width:100%;text-align:center" onclick="signOut()">Sign out</button>
     </div>
   </div>
 </div>
@@ -513,34 +502,40 @@
   <div>© 2026 ReplyAgent · <a href="#" style="color:var(--ink-3);">Privacy</a></div>
 </footer>
 
+<!-- Load Supabase JS from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-  // ── Config — replace with your actual Supabase values ──────────────────────
-  const SUPABASE_URL = 'https://YOUR_PROJECT_ID.supabase.co'
-  const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'
+  // ── CONFIGURATION (REPLACE WITH YOUR REAL DETAILS) ────────────────────────
+  const SUPABASE_URL = 'https://rkwpzubygaaqkrbyyhmu.supabase.co'
+  const SUPABASE_ANON_KEY = 'sb_publishable_V_pzVGdCZNm9KTYcM-uYdg_hEEYJmIU'
+  const EXTENSION_ID = 'YOUR_CHROME_EXTENSION_ID_HERE' 
+  // ──────────────────────────────────────────────────────────────────────────
 
   let currentEmail = ''
   let currentTab = 'login'
-
-  // ── Load Supabase JS from CDN ─────────────────────────────────────────────
-  const script = document.createElement('script')
-  script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js'
-  script.onload = initSupabase
-  document.head.appendChild(script)
-
   let sb = null
 
-  function initSupabase() {
+  // Initialize client safely now that scripts are loaded
+  if (typeof supabase !== 'undefined') {
     sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-    // Check if already signed in
+    
+    // Check local session
     sb.auth.getSession().then(({ data }) => {
-      if (data.session?.user) showSuccess(data.session.user)
+      if (data.session?.user) {
+        sendTokenToExtension(data.session)
+        showSuccess(data.session.user)
+      }
     })
-    // Listen for auth changes (e.g. after OTP verify)
+
     sb.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN' && session?.user) {
+        sendTokenToExtension(session)
         showSuccess(session.user)
       }
     })
+  } else {
+    console.error("Supabase CDN failed to load.")
   }
 
   function showTab(tab) {
@@ -577,17 +572,16 @@
 
     const { error } = await sb.auth.signInWithOtp({
       email,
-      options: { shouldCreateUser: true }
+      options: { shouldCreateUser: (currentTab === 'signup') }
     })
 
     setLoading('send-btn', false, 'Send login code →')
 
     if (error) { showAlert(error.message); return }
 
-    // Switch to OTP step
     document.getElementById('step-email').style.display = 'none'
     document.getElementById('step-otp').style.display = 'block'
-    document.getElementById('otp-info').textContent = `Code sent to ${email}. Check your inbox (and spam folder).`
+    document.getElementById('otp-info').textContent = `Code sent to ${email}. Check your inbox.`
     document.getElementById('otp-input').focus()
     clearAlert()
   }
@@ -607,17 +601,34 @@
     setLoading('verify-btn', false, 'Verify & sign in →')
 
     if (error) {
-      showAlert('Invalid or expired code. Try requesting a new one.')
+      showAlert(error.message || 'Invalid or expired code. Try requesting a new one.')
       return
     }
 
-    if (data.user) showSuccess(data.user)
+    if (data.session) {
+      sendTokenToExtension(data.session)
+      showSuccess(data.user)
+    }
+  }
+
+  // Communicate securely with the background script worker
+  function sendTokenToExtension(sessionData) {
+    if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.sendMessage) {
+      chrome.runtime.sendMessage(
+        EXTENSION_ID,
+        { type: "LOGIN_SUCCESS", session: sessionData },
+        (response) => {
+          if (response && response.success) {
+            console.log("Session delivered securely to Extension storage.");
+          }
+        }
+      );
+    }
   }
 
   function showSuccess(user) {
     document.getElementById('card-login').style.display = 'none'
     document.getElementById('card-success').style.display = 'block'
-    console.log('Signed in:', user.email)
   }
 
   function goBack() {
@@ -629,6 +640,9 @@
 
   async function signOut() {
     await sb.auth.signOut()
+    if (typeof chrome !== 'undefined' && chrome.storage) {
+      chrome.storage.local.remove('supabaseSession')
+    }
     document.getElementById('card-success').style.display = 'none'
     document.getElementById('card-login').style.display = 'block'
     document.getElementById('step-email').style.display = 'block'
