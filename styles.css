@@ -1,0 +1,5 @@
+/* Custom utility for the modal overlay */
+/* Tailwind handles the layout, we just need to override display when active */
+.modal-active {
+    display: flex !important;
+}
