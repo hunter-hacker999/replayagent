@@ -1,14 +1,17 @@
 // --- Modal UI Controls ---
 function openModal() {
-    document.getElementById('authModal').classList.add('modal-active');
+    const modal = document.getElementById('authModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
 }
 
 function closeModal() {
-    document.getElementById('authModal').classList.remove('modal-active');
+    const modal = document.getElementById('authModal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
 }
 
 // --- Supabase Config ---
-// IMPORTANT: Replace these with your actual keys
 const SUPABASE_URL = 'https://rkwpzubygaaqkrbyyhmu.supabase.co'
 const SUPABASE_ANON_KEY = 'sb_publishable_V_pzVGdCZNm9KTYcM-uYdg_hEEYJmIU'
 const EXTENSION_ID = 'ffcbkeipcfkkgafnflapocbhlchlaioc' 
@@ -59,7 +62,7 @@ async function sendCode() {
   
   const { error } = await sb.auth.signInWithOtp({ email })
   
-  sendBtn.innerText = 'Send login code →'
+  sendBtn.innerText = 'Send Code'
   sendBtn.disabled = false;
   
   if (error) {
@@ -71,7 +74,7 @@ async function sendCode() {
 
   document.getElementById('step-email').classList.add('hidden');
   document.getElementById('step-otp').classList.remove('hidden');
-  document.getElementById('otp-info').textContent = `Code sent to ${email}.`;
+  document.getElementById('otp-info').textContent = `Code sent to ${email}`;
 }
 
 async function verifyCode() {
@@ -84,7 +87,7 @@ async function verifyCode() {
 
   const { data, error } = await sb.auth.verifyOtp({ email: currentEmail, token: code, type: 'email' })
   
-  verifyBtn.innerText = 'Verify & sign in →'
+  verifyBtn.innerText = 'Verify'
   verifyBtn.disabled = false;
 
   if (error) {
@@ -161,7 +164,7 @@ async function saveProfile() {
 
   if (!error) {
     const profileAlert = document.getElementById('profile-alert');
-    profileAlert.innerText = 'Profile saved successfully!';
+    profileAlert.innerText = 'Profile saved successfully.';
     profileAlert.classList.remove('hidden');
   }
 }
