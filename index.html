@@ -58,6 +58,71 @@
         </div>
     </header>
 
+    <!-- 4. FOOTER (Apple-Style Fat Footer) -->
+    <footer class="w-full border-t border-[#E8E3D9] bg-[#F7F5F0] pt-16 pb-8 px-8 mt-20">
+        <div class="max-w-7xl mx-auto">
+            <!-- Columns -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+                <!-- Column 1 -->
+                <div>
+                    <h4 class="font-semibold text-[#2C2A29] mb-4 text-sm tracking-wide">Shop and Learn</h4>
+                    <ul class="space-y-3 text-sm text-[#5A5753] font-light">
+                        <li><a href="index.html" class="hover:text-[#C5A059] transition duration-300">Home</a></li>
+                        <li><a href="features.html" class="hover:text-[#C5A059] transition duration-300">Features</a></li>
+                        <li><a href="pricing.html" class="hover:text-[#C5A059] transition duration-300">Pricing</a></li>
+                        <li><a href="#" class="hover:text-[#C5A059] transition duration-300">Chrome Extension</a></li>
+                    </ul>
+                </div>
+                <!-- Column 2 -->
+                <div>
+                    <h4 class="font-semibold text-[#2C2A29] mb-4 text-sm tracking-wide">Account</h4>
+                    <ul class="space-y-3 text-sm text-[#5A5753] font-light">
+                        <li><button onclick="openModal()" class="hover:text-[#C5A059] transition duration-300">Manage Your Agent Profile</button></li>
+                        <li><button onclick="openModal()" class="hover:text-[#C5A059] transition duration-300">Sign In / Sign Up</button></li>
+                        <li><a href="#" class="hover:text-[#C5A059] transition duration-300">Billing</a></li>
+                    </ul>
+                </div>
+                <!-- Column 3 -->
+                <div>
+                    <h4 class="font-semibold text-[#2C2A29] mb-4 text-sm tracking-wide">Resources</h4>
+                    <ul class="space-y-3 text-sm text-[#5A5753] font-light">
+                        <li><a href="#" class="hover:text-[#C5A059] transition duration-300">Installation Guide</a></li>
+                        <li><a href="#" class="hover:text-[#C5A059] transition duration-300">Tone Best Practices</a></li>
+                        <li><a href="#" class="hover:text-[#C5A059] transition duration-300">Help Center</a></li>
+                        <li><a href="#" class="hover:text-[#C5A059] transition duration-300">API Documentation</a></li>
+                    </ul>
+                </div>
+                <!-- Column 4 -->
+                <div>
+                    <h4 class="font-semibold text-[#2C2A29] mb-4 text-sm tracking-wide">About ReplyAgent</h4>
+                    <ul class="space-y-3 text-sm text-[#5A5753] font-light">
+                        <li><a href="#" class="hover:text-[#C5A059] transition duration-300">Our Story</a></li>
+                        <li><a href="#" class="hover:text-[#C5A059] transition duration-300">Careers</a></li>
+                        <li><a href="#" class="hover:text-[#C5A059] transition duration-300">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-[#C5A059] transition duration-300">Investors</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Legal Section -->
+            <div class="border-t border-[#E8E3D9] pt-8 flex flex-col lg:flex-row justify-between items-center text-xs text-[#5A5753] font-light">
+                <p class="mb-4 lg:mb-0">Copyright © 2026 ReplyAgent Inc. All rights reserved.</p>
+                <div class="flex flex-wrap justify-center gap-4 mb-4 lg:mb-0">
+                    <a href="#" class="hover:text-[#2C2A29] transition duration-300">Privacy Policy</a>
+                    <span class="hidden md:inline border-l border-[#E8E3D9]"></span>
+                    <a href="#" class="hover:text-[#2C2A29] transition duration-300">Terms of Use</a>
+                    <span class="hidden md:inline border-l border-[#E8E3D9]"></span>
+                    <a href="#" class="hover:text-[#2C2A29] transition duration-300">Sales Policy</a>
+                    <span class="hidden md:inline border-l border-[#E8E3D9]"></span>
+                    <a href="#" class="hover:text-[#2C2A29] transition duration-300">Legal</a>
+                    <span class="hidden md:inline border-l border-[#E8E3D9]"></span>
+                    <a href="#" class="hover:text-[#2C2A29] transition duration-300">Site Map</a>
+                </div>
+                <p>Hyderabad, India</p>
+            </div>
+        </div>
+    </footer>
+
     <!-- 3. SUPABASE AUTH MODAL (Wabi-Sabi Style) -->
     <div id="authModal" class="fixed inset-0 bg-[#2C2A29]/40 backdrop-blur-sm hidden justify-center items-center z-50 transition-opacity">
         <div class="bg-[#F7F5F0] p-10 w-full max-w-md relative shadow-2xl border border-[#E8E3D9] m-4">
