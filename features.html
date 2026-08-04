@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features | ReplyAgent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #F7F5F0; color: #2C2A29; font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .brand-font { font-family: 'Playfair Display', serif; }
+        .gold-accent { color: #C5A059; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: #E8E3D9; border-radius: 4px; }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#E8E3D9]">
+
+    <!-- NAVIGATION -->
+    <nav class="w-full border-b border-[#E8E3D9] py-6 px-8 flex justify-between items-center z-40 relative">
+        <a href="index.html" class="brand-font text-2xl font-semibold tracking-wide">
+            Reply<span class="gold-accent italic">Agent</span>
+        </a>
+        <div class="hidden md:flex space-x-10 items-center">
+            <a href="features.html" class="text-sm tracking-widest uppercase gold-accent transition duration-300">Features</a>
+            <a href="pricing.html" class="text-sm tracking-widest uppercase hover:text-[#C5A059] transition duration-300">Pricing</a>
+            <button onclick="openModal()" class="text-sm tracking-widest uppercase hover:text-[#C5A059] transition duration-300">Sign In</button>
+        </div>
+    </nav>
+
+    <!-- FEATURES CONTENT -->
+    <section class="max-w-4xl mx-auto px-6 py-32">
+        <h1 class="reveal-text text-5xl md:text-6xl font-normal text-center mb-24 brand-font opacity-0 translate-y-10">The Anatomy of a <br/><span class="italic gold-accent">Perfect</span> Reply.</h1>
+        
+        <div class="space-y-32">
+            <!-- Feature 1 -->
+            <div class="scroll-fade opacity-0 translate-y-10 flex flex-col md:flex-row items-start gap-12">
+                <div class="text-7xl font-light text-[#E8E3D9] brand-font w-24">01</div>
+                <div>
+                    <h2 class="text-3xl mb-4 brand-font italic">Context Aware</h2>
+                    <p class="font-light leading-relaxed text-[#5A5753] text-lg">The AI reads the full thread. It understands the nuances of the conversation, ensuring your response is never disjointed or out of touch with what the client actually asked.</p>
+                </div>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="scroll-fade opacity-0 translate-y-10 flex flex-col md:flex-row items-start gap-12">
+                <div class="text-7xl font-light text-[#E8E3D9] brand-font w-24">02</div>
+                <div>
+                    <h2 class="text-3xl mb-4 brand-font italic">Uniquely Yours</h2>
+                    <p class="font-light leading-relaxed text-[#5A5753] text-lg">By utilizing your specific profile—your brokerage, your market, your specialty—ReplyAgent fills the gaps with real, grounding facts about your business, moving away from robotic, generic AI text.</p>
+                </div>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="scroll-fade opacity-0 translate-y-10 flex flex-col md:flex-row items-start gap-12">
+                <div class="text-7xl font-light text-[#E8E3D9] brand-font w-24">03</div>
+                <div>
+                    <h2 class="text-3xl mb-4 brand-font italic">Frictionless Workflow</h2>
+                    <p class="font-light leading-relaxed text-[#5A5753] text-lg">It lives directly inside your Gmail reply box. One click to generate, one click to insert. No tab switching, no copying and pasting. Just pure efficiency.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AUTH MODAL HTML (Required for the sign-in button to work on this page) -->
+    <div id="authModal" class="fixed inset-0 bg-[#2C2A29]/40 backdrop-blur-sm hidden justify-center items-center z-50 transition-opacity">
+        <div class="bg-[#F7F5F0] p-10 w-full max-w-md relative shadow-2xl border border-[#E8E3D9] m-4">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-[#5A5753] hover:text-[#2C2A29] text-3xl font-light">&times;</button>
+            <div id="auth-card">
+                <div id="card-loading" class="text-center py-10"><p class="text-[#5A5753] font-light tracking-widest uppercase text-sm">Checking session...</p></div>
+                <div id="card-login" class="hidden">
+                    <h2 class="text-3xl font-normal mb-2 brand-font">Welcome.</h2>
+                    <p class="text-[#5A5753] font-light mb-8">Sign in to refine your agent profile.</p>
+                    <div id="alert" class="hidden text-red-700 bg-red-50 p-3 mb-4 text-sm border border-red-100"></div>
+                    <div id="step-email">
+                        <input type="email" id="email-input" placeholder="Email address" class="w-full p-4 bg-transparent border-b border-[#2C2A29] mb-6 focus:outline-none focus:border-[#C5A059] transition" onkeydown="if(event.key==='Enter') sendCode()" />
+                        <button id="send-btn" onclick="sendCode()" class="w-full bg-[#2C2A29] text-[#F7F5F0] py-4 text-sm tracking-widest uppercase hover:bg-[#1A1818] transition duration-300">Send Code</button>
+                    </div>
+                    <div id="step-otp" class="hidden">
+                        <div id="otp-info" class="text-[#5A5753] italic mb-6 text-sm"></div>
+                        <input type="text" inputmode="numeric" id="otp-input" placeholder="000000" class="w-full p-4 bg-transparent border-b border-[#2C2A29] mb-6 focus:outline-none focus:border-[#C5A059] transition tracking-[0.5em] text-center text-xl font-mono" oninput="this.value=this.value.replace(/\D/g,'')" onkeydown="if(event.key==='Enter') verifyCode()" />
+                        <button id="verify-btn" onclick="verifyCode()" class="w-full bg-[#2C2A29] text-[#F7F5F0] py-4 text-sm tracking-widest uppercase hover:bg-[#1A1818] transition duration-300">Verify</button>
+                        <button onclick="signOut()" class="w-full mt-6 text-sm text-[#5A5753] hover:text-[#2C2A29] transition uppercase tracking-widest">← Back</button>
+                    </div>
+                </div>
+                <div id="card-profile" class="hidden">
+                    <h2 class="text-3xl font-normal mb-2 brand-font">Your Profile.</h2>
+                    <p class="text-[#5A5753] font-light mb-6">Shape the voice of your AI.</p>
+                    <div id="profile-alert" class="hidden text-[#C5A059] mb-4 text-sm italic"></div>
+                    <div class="space-y-4 mb-8">
+                        <input type="text" id="prof-name" placeholder="Full Name" class="w-full p-3 bg-transparent border-b border-[#E8E3D9] focus:outline-none focus:border-[#C5A059] transition" />
+                        <input type="text" id="prof-brokerage" placeholder="Brokerage / Company" class="w-full p-3 bg-transparent border-b border-[#E8E3D9] focus:outline-none focus:border-[#C5A059] transition" />
+                        <input type="text" id="prof-market" placeholder="Market / Specialty" class="w-full p-3 bg-transparent border-b border-[#E8E3D9] focus:outline-none focus:border-[#C5A059] transition" />
+                    </div>
+                    <button id="save-profile-btn" onclick="saveProfile()" class="w-full bg-[#2C2A29] text-[#F7F5F0] py-4 text-sm tracking-widest uppercase hover:bg-[#1A1818] transition duration-300 mb-4">Save Profile</button>
+                    <button onclick="signOut()" class="w-full border border-[#2C2A29] text-[#2C2A29] py-4 text-sm tracking-widest uppercase hover:bg-[#E8E3D9] transition duration-300">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.to(".reveal-text", { y: 0, opacity: 1, duration: 1.5, ease: "power3.out", delay: 0.2 });
+        gsap.utils.toArray('.scroll-fade').forEach(element => {
+            gsap.to(element, { scrollTrigger: { trigger: element, start: "top 85%" }, y: 0, opacity: 1, duration: 1.2, ease: "power2.out" });
+        });
+    </script>
+</body>
+</html>
