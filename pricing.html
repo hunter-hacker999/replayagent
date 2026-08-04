@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing | ReplyAgent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #F7F5F0; color: #2C2A29; font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .brand-font { font-family: 'Playfair Display', serif; }
+        .gold-accent { color: #C5A059; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: #E8E3D9; border-radius: 4px; }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#E8E3D9]">
+
+    <!-- NAVIGATION -->
+    <nav class="w-full border-b border-[#E8E3D9] py-6 px-8 flex justify-between items-center z-40 relative">
+        <a href="index.html" class="brand-font text-2xl font-semibold tracking-wide">
+            Reply<span class="gold-accent italic">Agent</span>
+        </a>
+        <div class="hidden md:flex space-x-10 items-center">
+            <a href="features.html" class="text-sm tracking-widest uppercase hover:text-[#C5A059] transition duration-300">Features</a>
+            <a href="pricing.html" class="text-sm tracking-widest uppercase gold-accent transition duration-300">Pricing</a>
+            <button onclick="openModal()" class="text-sm tracking-widest uppercase hover:text-[#C5A059] transition duration-300">Sign In</button>
+        </div>
+    </nav>
+
+    <!-- PRICING CONTENT -->
+    <section class="max-w-6xl mx-auto px-6 py-24">
+        <div class="text-center mb-20">
+            <h1 class="reveal-text text-5xl font-normal mb-4 brand-font opacity-0 translate-y-10">Simple, transparent pricing.</h1>
+            <p class="fade-up font-light text-[#5A5753] opacity-0 translate-y-10">Start for free, upgrade when you need unlimited power.</p>
+        </div>
+
+        <div class="flex flex-col md:flex-row justify-center gap-10 max-w-4xl mx-auto">
+            <!-- Free Plan -->
+            <div class="fade-up opacity-0 translate-y-10 w-full md:w-1/2 p-10 border border-[#E8E3D9] bg-white relative">
+                <h3 class="text-2xl brand-font mb-2">Basic</h3>
+                <div class="text-5xl font-light mb-8">$0<span class="text-lg text-[#5A5753] ml-2">/mo</span></div>
+                
+                <ul class="space-y-4 mb-10 font-light text-[#5A5753]">
+                    <li><span class="gold-accent mr-3">✦</span>15 AI drafts per month</li>
+                    <li><span class="gold-accent mr-3">✦</span>Basic tone matching</li>
+                    <li><span class="gold-accent mr-3">✦</span>Gmail integration</li>
+                </ul>
+                
+                <button onclick="openModal()" class="w-full border border-[#2C2A29] text-[#2C2A29] py-4 text-sm tracking-widest uppercase hover:bg-[#E8E3D9] transition duration-300">Start Free</button>
+            </div>
+
+            <!-- Pro Plan -->
+            <div class="fade-up opacity-0 translate-y-10 w-full md:w-1/2 p-10 bg-[#2C2A29] text-[#F7F5F0] relative shadow-2xl">
+                <div class="absolute top-0 right-0 bg-[#C5A059] text-white text-xs font-semibold px-4 py-1 tracking-widest uppercase">Pro</div>
+                <h3 class="text-2xl brand-font mb-2">Premium</h3>
+                <div class="text-5xl font-light mb-8">$19<span class="text-lg text-gray-400 ml-2">/mo</span></div>
+                
+                <ul class="space-y-4 mb-10 font-light text-gray-300">
+                    <li><span class="gold-accent mr-3">✦</span>Unlimited AI drafts</li>
+                    <li><span class="gold-accent mr-3">✦</span>Advanced context tuning</li>
+                    <li><span class="gold-accent mr-3">✦</span>Priority support</li>
+                </ul>
+                
+                <button onclick="openModal()" class="w-full bg-[#C5A059] text-white py-4 text-sm tracking-widest uppercase hover:bg-[#B38D46] transition duration-300">Upgrade Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- AUTH MODAL HTML -->
+    <div id="authModal" class="fixed inset-0 bg-[#2C2A29]/40 backdrop-blur-sm hidden justify-center items-center z-50 transition-opacity">
+        <div class="bg-[#F7F5F0] p-10 w-full max-w-md relative shadow-2xl border border-[#E8E3D9] m-4">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-[#5A5753] hover:text-[#2C2A29] text-3xl font-light">&times;</button>
+            <div id="auth-card">
+                <div id="card-loading" class="text-center py-10"><p class="text-[#5A5753] font-light tracking-widest uppercase text-sm">Checking session...</p></div>
+                <div id="card-login" class="hidden">
+                    <h2 class="text-3xl font-normal mb-2 brand-font">Welcome.</h2>
+                    <p class="text-[#5A5753] font-light mb-8">Sign in to refine your agent profile.</p>
+                    <div id="alert" class="hidden text-red-700 bg-red-50 p-3 mb-4 text-sm border border-red-100"></div>
+                    <div id="step-email">
+                        <input type="email" id="email-input" placeholder="Email address" class="w-full p-4 bg-transparent border-b border-[#2C2A29] mb-6 focus:outline-none focus:border-[#C5A059] transition" onkeydown="if(event.key==='Enter') sendCode()" />
+                        <button id="send-btn" onclick="sendCode()" class="w-full bg-[#2C2A29] text-[#F7F5F0] py-4 text-sm tracking-widest uppercase hover:bg-[#1A1818] transition duration-300">Send Code</button>
+                    </div>
+                    <div id="step-otp" class="hidden">
+                        <div id="otp-info" class="text-[#5A5753] italic mb-6 text-sm"></div>
+                        <input type="text" inputmode="numeric" id="otp-input" placeholder="000000" class="w-full p-4 bg-transparent border-b border-[#2C2A29] mb-6 focus:outline-none focus:border-[#C5A059] transition tracking-[0.5em] text-center text-xl font-mono" oninput="this.value=this.value.replace(/\D/g,'')" onkeydown="if(event.key==='Enter') verifyCode()" />
+                        <button id="verify-btn" onclick="verifyCode()" class="w-full bg-[#2C2A29] text-[#F7F5F0] py-4 text-sm tracking-widest uppercase hover:bg-[#1A1818] transition duration-300">Verify</button>
+                        <button onclick="signOut()" class="w-full mt-6 text-sm text-[#5A5753] hover:text-[#2C2A29] transition uppercase tracking-widest">← Back</button>
+                    </div>
+                </div>
+                <div id="card-profile" class="hidden">
+                    <h2 class="text-3xl font-normal mb-2 brand-font">Your Profile.</h2>
+                    <p class="text-[#5A5753] font-light mb-6">Shape the voice of your AI.</p>
+                    <div id="profile-alert" class="hidden text-[#C5A059] mb-4 text-sm italic"></div>
+                    <div class="space-y-4 mb-8">
+                        <input type="text" id="prof-name" placeholder="Full Name" class="w-full p-3 bg-transparent border-b border-[#E8E3D9] focus:outline-none focus:border-[#C5A059] transition" />
+                        <input type="text" id="prof-brokerage" placeholder="Brokerage / Company" class="w-full p-3 bg-transparent border-b border-[#E8E3D9] focus:outline-none focus:border-[#C5A059] transition" />
+                        <input type="text" id="prof-market" placeholder="Market / Specialty" class="w-full p-3 bg-transparent border-b border-[#E8E3D9] focus:outline-none focus:border-[#C5A059] transition" />
+                    </div>
+                    <button id="save-profile-btn" onclick="saveProfile()" class="w-full bg-[#2C2A29] text-[#F7F5F0] py-4 text-sm tracking-widest uppercase hover:bg-[#1A1818] transition duration-300 mb-4">Save Profile</button>
+                    <button onclick="signOut()" class="w-full border border-[#2C2A29] text-[#2C2A29] py-4 text-sm tracking-widest uppercase hover:bg-[#E8E3D9] transition duration-300">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth.js"></script>
+    <script>
+        gsap.to(".reveal-text", { y: 0, opacity: 1, duration: 1.5, ease: "power3.out", delay: 0.2 });
+        gsap.to(".fade-up", { y: 0, opacity: 1, duration: 1.5, ease: "power3.out", delay: 0.4, stagger: 0.2 });
+    </script>
+</body>
+</html>
