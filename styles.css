@@ -3,3 +3,16 @@
 .modal-active {
     display: flex !important;
 }
+/* Infinite Auto-Slider Animation */
+.marquee-content {
+    display: flex;
+    width: max-content;
+    animation: scroll-marquee 35s linear infinite;
+}
+.marquee-content:hover {
+    animation-play-state: paused;
+}
+@keyframes scroll-marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
