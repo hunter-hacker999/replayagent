@@ -21,6 +21,18 @@
         .gold-accent { color: #C5A059; }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-thumb { background: #E8E3D9; border-radius: 4px; }
+
+        /* The foolproof marquee animation */
+        .animate-scrolling-track {
+            animation: slide-track 35s linear infinite;
+        }
+        .animate-scrolling-track:hover {
+            animation-play-state: paused;
+        }
+        @keyframes slide-track {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-[#E8E3D9]">
@@ -39,7 +51,6 @@
 
     <!-- 2. HERO SECTION -->
     <header class="min-h-[85vh] flex flex-col justify-center items-center text-center px-6">
-        <!-- GSAP Animation Classes Added Here -->
         <h1 class="reveal-text text-5xl md:text-7xl font-normal leading-tight mb-6 max-w-4xl opacity-0 translate-y-10">
             The art of <span class="italic gold-accent">authentic</span> connection, powered by AI.
         </h1>
@@ -58,47 +69,36 @@
         </div>
     </header>
 
-    <!-- 4. FOOTER (Apple-Style Fat Footer) -->
-    <footer class="w-full border-t border-[#E8E3D9] bg-[#F7F5F0] pt-16 pb-8 px-8 mt-20">
-        <div class="max-w-7xl mx-auto">
-            <!-- AUTO-SLIDING REVIEWS SECTION -->
+    <!-- 3. AUTO-SLIDING REVIEWS SECTION -->
     <section class="py-32 bg-white overflow-hidden border-t border-[#E8E3D9]">
         <div class="max-w-7xl mx-auto px-6 mb-16 text-center scroll-fade opacity-0 translate-y-10">
             <h2 class="text-4xl font-normal brand-font mb-4">Trusted by Professionals.</h2>
             <p class="font-light text-[#5A5753]">See how others are taking back their time.</p>
         </div>
         
-        <!-- The Slider Container -->
         <div class="relative w-full overflow-hidden flex">
-            <!-- Edge Gradients for a seamless fade effect -->
             <div class="absolute inset-y-0 left-0 w-24 md:w-48 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
             <div class="absolute inset-y-0 right-0 w-24 md:w-48 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
             
-          <!-- The Moving Track -->
-            <!-- Added 'flex', 'flex-nowrap', and 'w-max' to force a single row -->
-            <div class="marquee-content flex flex-nowrap w-max gap-8 px-4">
+            <div class="animate-scrolling-track flex flex-nowrap w-max gap-8 px-4">
                 
-                <!-- GROUP 1 (Original) -->
+                <!-- GROUP 1 -->
                 <div class="flex flex-nowrap gap-8">
-                    <!-- Review 1 -->
                     <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
                         <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
                         <p class="font-light text-[#5A5753] mb-6">"This completely changed how I handle client outreach. It sounds exactly like me."</p>
                         <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">David M.</p>
                     </div>
-                    <!-- Review 2 -->
                     <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
                         <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
                         <p class="font-light text-[#5A5753] mb-6">"The context-awareness is unbelievable. I save at least two hours a day."</p>
                         <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">Sarah K.</p>
                     </div>
-                    <!-- Review 3 -->
                     <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
                         <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
                         <p class="font-light text-[#5A5753] mb-6">"Finally, an AI that doesn't sound like a robot. The custom profiles are a game changer."</p>
                         <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">James L.</p>
                     </div>
-                    <!-- Review 4 -->
                     <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
                         <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
                         <p class="font-light text-[#5A5753] mb-6">"Setup took less than five minutes. It is so deeply integrated into my daily workflow now."</p>
@@ -106,56 +106,23 @@
                     </div>
                 </div>
 
-                <!-- GROUP 2 (Exact Duplicate for the seamless loop) -->
+                <!-- GROUP 2 (Duplicate) -->
                 <div class="flex flex-nowrap gap-8">
-                    <!-- Review 1 -->
                     <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
                         <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
                         <p class="font-light text-[#5A5753] mb-6">"This completely changed how I handle client outreach. It sounds exactly like me."</p>
                         <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">David M.</p>
                     </div>
-                    <!-- Review 2 -->
                     <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
                         <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
                         <p class="font-light text-[#5A5753] mb-6">"The context-awareness is unbelievable. I save at least two hours a day."</p>
                         <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">Sarah K.</p>
                     </div>
-                    <!-- Review 3 -->
                     <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
                         <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
                         <p class="font-light text-[#5A5753] mb-6">"Finally, an AI that doesn't sound like a robot. The custom profiles are a game changer."</p>
                         <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">James L.</p>
                     </div>
-                    <!-- Review 4 -->
-                    <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
-                        <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
-                        <p class="font-light text-[#5A5753] mb-6">"Setup took less than five minutes. It is so deeply integrated into my daily workflow now."</p>
-                        <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">Elena R.</p>
-                    </div>
-                </div>
-
-            </div>
-                <!-- GROUP 2 (Exact Duplicate for the seamless loop) -->
-                <div class="flex gap-8">
-                    <!-- Review 1 -->
-                    <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
-                        <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
-                        <p class="font-light text-[#5A5753] mb-6">"This completely changed how I handle client outreach. It sounds exactly like me."</p>
-                        <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">David M.</p>
-                    </div>
-                    <!-- Review 2 -->
-                    <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
-                        <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
-                        <p class="font-light text-[#5A5753] mb-6">"The context-awareness is unbelievable. I save at least two hours a day."</p>
-                        <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">Sarah K.</p>
-                    </div>
-                    <!-- Review 3 -->
-                    <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
-                        <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
-                        <p class="font-light text-[#5A5753] mb-6">"Finally, an AI that doesn't sound like a robot. The custom profiles are a game changer."</p>
-                        <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">James L.</p>
-                    </div>
-                    <!-- Review 4 -->
                     <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
                         <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
                         <p class="font-light text-[#5A5753] mb-6">"Setup took less than five minutes. It is so deeply integrated into my daily workflow now."</p>
@@ -166,9 +133,11 @@
             </div>
         </div>
     </section>
-            <!-- Columns -->
+
+    <!-- 4. FOOTER -->
+    <footer class="w-full border-t border-[#E8E3D9] bg-[#F7F5F0] pt-16 pb-8 px-8">
+        <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-                <!-- Column 1 -->
                 <div>
                     <h4 class="font-semibold text-[#2C2A29] mb-4 text-sm tracking-wide">Shop and Learn</h4>
                     <ul class="space-y-3 text-sm text-[#5A5753] font-light">
@@ -178,81 +147,57 @@
                         <li><a href="#" class="hover:text-[#C5A059] transition duration-300">Chrome Extension</a></li>
                     </ul>
                 </div>
-                <!-- Column 2 -->
                 <div>
                     <h4 class="font-semibold text-[#2C2A29] mb-4 text-sm tracking-wide">Account</h4>
                     <ul class="space-y-3 text-sm text-[#5A5753] font-light">
-                        <li><button onclick="openModal()" class="hover:text-[#C5A059] transition duration-300">Manage Your Agent Profile</button></li>
+                        <li><button onclick="openModal()" class="hover:text-[#C5A059] transition duration-300">Manage Profile</button></li>
                         <li><button onclick="openModal()" class="hover:text-[#C5A059] transition duration-300">Sign In / Sign Up</button></li>
-                        <li><a href="#" class="hover:text-[#C5A059] transition duration-300">Billing</a></li>
                     </ul>
                 </div>
-                <!-- Column 3 -->
                 <div>
                     <h4 class="font-semibold text-[#2C2A29] mb-4 text-sm tracking-wide">Resources</h4>
                     <ul class="space-y-3 text-sm text-[#5A5753] font-light">
                         <li><a href="#" class="hover:text-[#C5A059] transition duration-300">Installation Guide</a></li>
-                        <li><a href="#" class="hover:text-[#C5A059] transition duration-300">Tone Best Practices</a></li>
                         <li><a href="#" class="hover:text-[#C5A059] transition duration-300">Help Center</a></li>
-                        <li><a href="#" class="hover:text-[#C5A059] transition duration-300">API Documentation</a></li>
                     </ul>
                 </div>
-                <!-- Column 4 -->
                 <div>
-                    <h4 class="font-semibold text-[#2C2A29] mb-4 text-sm tracking-wide">About ReplyAgent</h4>
+                    <h4 class="font-semibold text-[#2C2A29] mb-4 text-sm tracking-wide">About</h4>
                     <ul class="space-y-3 text-sm text-[#5A5753] font-light">
                         <li><a href="#" class="hover:text-[#C5A059] transition duration-300">Our Story</a></li>
-                        <li><a href="#" class="hover:text-[#C5A059] transition duration-300">Careers</a></li>
                         <li><a href="#" class="hover:text-[#C5A059] transition duration-300">Contact Us</a></li>
-                        <li><a href="#" class="hover:text-[#C5A059] transition duration-300">Investors</a></li>
                     </ul>
                 </div>
             </div>
 
-            <!-- Bottom Legal Section -->
             <div class="border-t border-[#E8E3D9] pt-8 flex flex-col lg:flex-row justify-between items-center text-xs text-[#5A5753] font-light">
                 <p class="mb-4 lg:mb-0">Copyright © 2026 ReplyAgent Inc. All rights reserved.</p>
                 <div class="flex flex-wrap justify-center gap-4 mb-4 lg:mb-0">
                     <a href="#" class="hover:text-[#2C2A29] transition duration-300">Privacy Policy</a>
                     <span class="hidden md:inline border-l border-[#E8E3D9]"></span>
                     <a href="#" class="hover:text-[#2C2A29] transition duration-300">Terms of Use</a>
-                    <span class="hidden md:inline border-l border-[#E8E3D9]"></span>
-                    <a href="#" class="hover:text-[#2C2A29] transition duration-300">Sales Policy</a>
-                    <span class="hidden md:inline border-l border-[#E8E3D9]"></span>
-                    <a href="#" class="hover:text-[#2C2A29] transition duration-300">Legal</a>
-                    <span class="hidden md:inline border-l border-[#E8E3D9]"></span>
-                    <a href="#" class="hover:text-[#2C2A29] transition duration-300">Site Map</a>
                 </div>
                 <p>Hyderabad, India</p>
             </div>
         </div>
     </footer>
 
-    <!-- 3. SUPABASE AUTH MODAL (Wabi-Sabi Style) -->
+    <!-- 5. SUPABASE AUTH MODAL -->
     <div id="authModal" class="fixed inset-0 bg-[#2C2A29]/40 backdrop-blur-sm hidden justify-center items-center z-50 transition-opacity">
         <div class="bg-[#F7F5F0] p-10 w-full max-w-md relative shadow-2xl border border-[#E8E3D9] m-4">
-            <!-- Close Button -->
             <button onclick="closeModal()" class="absolute top-6 right-6 text-[#5A5753] hover:text-[#2C2A29] text-3xl font-light">&times;</button>
-            
-            <!-- Auth Container -->
             <div id="auth-card">
-                <!-- LOADING STATE -->
                 <div id="card-loading" class="text-center py-10">
                     <p class="text-[#5A5753] font-light tracking-widest uppercase text-sm">Checking session...</p>
                 </div>
-            
-                <!-- LOGIN CARD -->
                 <div id="card-login" class="hidden">
                     <h2 class="text-3xl font-normal mb-2 brand-font">Welcome.</h2>
                     <p class="text-[#5A5753] font-light mb-8">Sign in to refine your agent profile.</p>
-                    
                     <div id="alert" class="hidden text-red-700 bg-red-50 p-3 mb-4 text-sm border border-red-100"></div>
-            
                     <div id="step-email">
                         <input type="email" id="email-input" placeholder="Email address" class="w-full p-4 bg-transparent border-b border-[#2C2A29] mb-6 focus:outline-none focus:border-[#C5A059] transition" onkeydown="if(event.key==='Enter') sendCode()" />
                         <button id="send-btn" onclick="sendCode()" class="w-full bg-[#2C2A29] text-[#F7F5F0] py-4 text-sm tracking-widest uppercase hover:bg-[#1A1818] transition duration-300">Send Code</button>
                     </div>
-            
                     <div id="step-otp" class="hidden">
                         <div id="otp-info" class="text-[#5A5753] italic mb-6 text-sm"></div>
                         <input type="text" inputmode="numeric" id="otp-input" placeholder="000000" class="w-full p-4 bg-transparent border-b border-[#2C2A29] mb-6 focus:outline-none focus:border-[#C5A059] transition tracking-[0.5em] text-center text-xl font-mono" oninput="this.value=this.value.replace(/\D/g,'')" onkeydown="if(event.key==='Enter') verifyCode()" />
@@ -260,20 +205,15 @@
                         <button onclick="signOut()" class="w-full mt-6 text-sm text-[#5A5753] hover:text-[#2C2A29] transition uppercase tracking-widest">← Back</button>
                     </div>
                 </div>
-            
-                <!-- PROFILE CARD -->
                 <div id="card-profile" class="hidden">
                     <h2 class="text-3xl font-normal mb-2 brand-font">Your Profile.</h2>
                     <p class="text-[#5A5753] font-light mb-6">Shape the voice of your AI.</p>
-            
                     <div id="profile-alert" class="hidden text-[#C5A059] mb-4 text-sm italic"></div>
-            
                     <div class="space-y-4 mb-8">
                         <input type="text" id="prof-name" placeholder="Full Name" class="w-full p-3 bg-transparent border-b border-[#E8E3D9] focus:outline-none focus:border-[#C5A059] transition" />
                         <input type="text" id="prof-brokerage" placeholder="Brokerage / Company" class="w-full p-3 bg-transparent border-b border-[#E8E3D9] focus:outline-none focus:border-[#C5A059] transition" />
                         <input type="text" id="prof-market" placeholder="Market / Specialty" class="w-full p-3 bg-transparent border-b border-[#E8E3D9] focus:outline-none focus:border-[#C5A059] transition" />
                     </div>
-            
                     <button id="save-profile-btn" onclick="saveProfile()" class="w-full bg-[#2C2A29] text-[#F7F5F0] py-4 text-sm tracking-widest uppercase hover:bg-[#1A1818] transition duration-300 mb-4">Save Profile</button>
                     <button onclick="signOut()" class="w-full border border-[#2C2A29] text-[#2C2A29] py-4 text-sm tracking-widest uppercase hover:bg-[#E8E3D9] transition duration-300">Sign Out</button>
                 </div>
@@ -287,10 +227,8 @@
 
     <!-- GSAP Animation Logic -->
     <script>
-        // Ensure GSAP knows about ScrollTrigger
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. Reveal Main Headline
         gsap.to(".reveal-text", {
             y: 0,
             opacity: 1,
@@ -299,14 +237,24 @@
             delay: 0.2
         });
 
-        // 2. Reveal Subtitle and Buttons
         gsap.to(".fade-up", {
             y: 0,
             opacity: 1,
             duration: 1.5,
             ease: "power3.out",
             delay: 0.5,
-            stagger: 0.2 // Animates them one after another for a cascading effect
+            stagger: 0.2
+        });
+
+        // This is what makes the "Trusted by Professionals" text appear when you scroll!
+        gsap.utils.toArray('.scroll-fade').forEach(element => {
+            gsap.to(element, {
+                scrollTrigger: { trigger: element, start: "top 85%" },
+                y: 0,
+                opacity: 1,
+                duration: 1.2,
+                ease: "power2.out"
+            });
         });
     </script>
 </body>
