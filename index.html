@@ -61,6 +61,81 @@
     <!-- 4. FOOTER (Apple-Style Fat Footer) -->
     <footer class="w-full border-t border-[#E8E3D9] bg-[#F7F5F0] pt-16 pb-8 px-8 mt-20">
         <div class="max-w-7xl mx-auto">
+            <!-- AUTO-SLIDING REVIEWS SECTION -->
+    <section class="py-32 bg-white overflow-hidden border-t border-[#E8E3D9]">
+        <div class="max-w-7xl mx-auto px-6 mb-16 text-center scroll-fade opacity-0 translate-y-10">
+            <h2 class="text-4xl font-normal brand-font mb-4">Trusted by Professionals.</h2>
+            <p class="font-light text-[#5A5753]">See how others are taking back their time.</p>
+        </div>
+        
+        <!-- The Slider Container -->
+        <div class="relative w-full overflow-hidden flex">
+            <!-- Edge Gradients for a seamless fade effect -->
+            <div class="absolute inset-y-0 left-0 w-24 md:w-48 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+            <div class="absolute inset-y-0 right-0 w-24 md:w-48 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+            
+            <!-- The Moving Track -->
+            <div class="marquee-content gap-8 px-4">
+                
+                <!-- GROUP 1 (Original) -->
+                <div class="flex gap-8">
+                    <!-- Review 1 -->
+                    <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
+                        <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
+                        <p class="font-light text-[#5A5753] mb-6">"This completely changed how I handle client outreach. It sounds exactly like me."</p>
+                        <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">David M.</p>
+                    </div>
+                    <!-- Review 2 -->
+                    <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
+                        <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
+                        <p class="font-light text-[#5A5753] mb-6">"The context-awareness is unbelievable. I save at least two hours a day."</p>
+                        <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">Sarah K.</p>
+                    </div>
+                    <!-- Review 3 -->
+                    <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
+                        <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
+                        <p class="font-light text-[#5A5753] mb-6">"Finally, an AI that doesn't sound like a robot. The custom profiles are a game changer."</p>
+                        <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">James L.</p>
+                    </div>
+                    <!-- Review 4 -->
+                    <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
+                        <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
+                        <p class="font-light text-[#5A5753] mb-6">"Setup took less than five minutes. It is so deeply integrated into my daily workflow now."</p>
+                        <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">Elena R.</p>
+                    </div>
+                </div>
+
+                <!-- GROUP 2 (Exact Duplicate for the seamless loop) -->
+                <div class="flex gap-8">
+                    <!-- Review 1 -->
+                    <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
+                        <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
+                        <p class="font-light text-[#5A5753] mb-6">"This completely changed how I handle client outreach. It sounds exactly like me."</p>
+                        <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">David M.</p>
+                    </div>
+                    <!-- Review 2 -->
+                    <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
+                        <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
+                        <p class="font-light text-[#5A5753] mb-6">"The context-awareness is unbelievable. I save at least two hours a day."</p>
+                        <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">Sarah K.</p>
+                    </div>
+                    <!-- Review 3 -->
+                    <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
+                        <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
+                        <p class="font-light text-[#5A5753] mb-6">"Finally, an AI that doesn't sound like a robot. The custom profiles are a game changer."</p>
+                        <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">James L.</p>
+                    </div>
+                    <!-- Review 4 -->
+                    <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
+                        <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
+                        <p class="font-light text-[#5A5753] mb-6">"Setup took less than five minutes. It is so deeply integrated into my daily workflow now."</p>
+                        <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">Elena R.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
             <!-- Columns -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
                 <!-- Column 1 -->
