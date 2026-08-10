@@ -154,16 +154,35 @@
                         <button onclick="signOut()" class="w-full mt-6 text-sm text-[#5A5753] hover:text-[#2C2A29] transition uppercase tracking-widest">← Back</button>
                     </div>
                 </div>
+                <!-- PROFILE CARD -->
                 <div id="card-profile" class="hidden">
-                    <h2 class="text-3xl font-normal mb-2 brand-font">Your Profile.</h2>
-                    <p class="text-[#5A5753] font-light mb-6">Shape the voice of your AI.</p>
+                    <h2 class="text-3xl font-normal mb-2 brand-font">Your Portfolio.</h2>
+                    <p class="text-[#5A5753] font-light mb-6">Give the AI your professional context.</p>
+                    
                     <div id="profile-alert" class="hidden text-[#C5A059] mb-4 text-sm italic"></div>
-                    <div class="space-y-4 mb-8">
-                        <input type="text" id="prof-name" placeholder="Full Name" class="w-full p-3 bg-transparent border-b border-[#E8E3D9] focus:outline-none focus:border-[#C5A059] transition" />
-                        <input type="text" id="prof-brokerage" placeholder="Brokerage / Company" class="w-full p-3 bg-transparent border-b border-[#E8E3D9] focus:outline-none focus:border-[#C5A059] transition" />
-                        <input type="text" id="prof-market" placeholder="Market / Specialty" class="w-full p-3 bg-transparent border-b border-[#E8E3D9] focus:outline-none focus:border-[#C5A059] transition" />
+                    
+                    <!-- Scrollable container for the new fields -->
+                    <div class="space-y-4 mb-8 max-h-[50vh] overflow-y-auto pr-2">
+                        <!-- Basic Info -->
+                        <h3 class="text-xs font-semibold tracking-widest uppercase text-[#2C2A29] mb-2 border-b border-[#E8E3D9] pb-1">Basic Identity</h3>
+                        <input type="text" id="prof-name" placeholder="Name (e.g., O Lokesh)" class="w-full p-3 bg-transparent border-b border-[#E8E3D9] focus:outline-none focus:border-[#C5A059] transition text-sm" />
+                        <input type="text" id="prof-brokerage" placeholder="Company (e.g., Tech Solutions)" class="w-full p-3 bg-transparent border-b border-[#E8E3D9] focus:outline-none focus:border-[#C5A059] transition text-sm" />
+                        <input type="text" id="prof-market" placeholder="Market / City (e.g., Hyderabad)" class="w-full p-3 bg-transparent border-b border-[#E8E3D9] focus:outline-none focus:border-[#C5A059] transition text-sm" />
+                        
+                        <!-- Advanced AI Portfolio Info -->
+                        <h3 class="text-xs font-semibold tracking-widest uppercase text-[#2C2A29] mt-6 mb-2 border-b border-[#E8E3D9] pb-1">AI Behavior Rules</h3>
+                        
+                        <label class="block text-xs text-[#5A5753] mt-3">Professional Role</label>
+                        <input type="text" id="prof-role" placeholder="e.g., Data Science Professional & Salesforce Admin" class="w-full p-3 bg-transparent border-b border-[#E8E3D9] focus:outline-none focus:border-[#C5A059] transition text-sm" />
+                        
+                        <label class="block text-xs text-[#5A5753] mt-3">Communication Style</label>
+                        <input type="text" id="prof-style" placeholder="e.g., Direct, highly analytical, and polite." class="w-full p-3 bg-transparent border-b border-[#E8E3D9] focus:outline-none focus:border-[#C5A059] transition text-sm" />
+                        
+                        <label class="block text-xs text-[#5A5753] mt-3">Strict Rules (What the AI should NEVER do)</label>
+                        <input type="text" id="prof-rules" placeholder="e.g., Never promise exact deployment dates." class="w-full p-3 bg-transparent border-b border-[#E8E3D9] focus:outline-none focus:border-[#C5A059] transition text-sm" />
                     </div>
-                    <button id="save-profile-btn" onclick="saveProfile()" class="w-full bg-[#2C2A29] text-[#F7F5F0] py-4 text-sm tracking-widest uppercase hover:bg-[#1A1818] transition duration-300 mb-4">Save Profile</button>
+                    
+                    <button id="save-profile-btn" onclick="saveProfile()" class="w-full bg-[#2C2A29] text-[#F7F5F0] py-4 text-sm tracking-widest uppercase hover:bg-[#1A1818] transition duration-300 mb-4">Save Portfolio</button>
                     <button onclick="signOut()" class="w-full border border-[#2C2A29] text-[#2C2A29] py-4 text-sm tracking-widest uppercase hover:bg-[#E8E3D9] transition duration-300">Sign Out</button>
                 </div>
             </div>
