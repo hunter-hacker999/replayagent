@@ -74,11 +74,12 @@
             <div class="absolute inset-y-0 left-0 w-24 md:w-48 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
             <div class="absolute inset-y-0 right-0 w-24 md:w-48 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
             
-            <!-- The Moving Track -->
-            <div class="marquee-content gap-8 px-4">
+          <!-- The Moving Track -->
+            <!-- Added 'flex', 'flex-nowrap', and 'w-max' to force a single row -->
+            <div class="marquee-content flex flex-nowrap w-max gap-8 px-4">
                 
                 <!-- GROUP 1 (Original) -->
-                <div class="flex gap-8">
+                <div class="flex flex-nowrap gap-8">
                     <!-- Review 1 -->
                     <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
                         <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
@@ -105,6 +106,35 @@
                     </div>
                 </div>
 
+                <!-- GROUP 2 (Exact Duplicate for the seamless loop) -->
+                <div class="flex flex-nowrap gap-8">
+                    <!-- Review 1 -->
+                    <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
+                        <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
+                        <p class="font-light text-[#5A5753] mb-6">"This completely changed how I handle client outreach. It sounds exactly like me."</p>
+                        <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">David M.</p>
+                    </div>
+                    <!-- Review 2 -->
+                    <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
+                        <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
+                        <p class="font-light text-[#5A5753] mb-6">"The context-awareness is unbelievable. I save at least two hours a day."</p>
+                        <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">Sarah K.</p>
+                    </div>
+                    <!-- Review 3 -->
+                    <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
+                        <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
+                        <p class="font-light text-[#5A5753] mb-6">"Finally, an AI that doesn't sound like a robot. The custom profiles are a game changer."</p>
+                        <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">James L.</p>
+                    </div>
+                    <!-- Review 4 -->
+                    <div class="w-80 flex-shrink-0 bg-[#F7F5F0] p-8 border border-[#E8E3D9] transition hover:shadow-lg">
+                        <div class="flex text-[#C5A059] mb-4 text-xl">★★★★★</div>
+                        <p class="font-light text-[#5A5753] mb-6">"Setup took less than five minutes. It is so deeply integrated into my daily workflow now."</p>
+                        <p class="font-semibold text-sm tracking-widest uppercase text-[#2C2A29]">Elena R.</p>
+                    </div>
+                </div>
+
+            </div>
                 <!-- GROUP 2 (Exact Duplicate for the seamless loop) -->
                 <div class="flex gap-8">
                     <!-- Review 1 -->
