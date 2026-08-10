@@ -142,6 +142,24 @@ async function fetchProfile() {
   } catch (err) { console.error("Could not fetch profile:", err) }
 }
 
+async function fetchProfile() {
+  if (!currentUser) return;
+  try {
+    const { data, error } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
+    if (data) {
+      // Basic Info
+      document.getElementById('prof-name').value = data.full_name || '';
+      document.getElementById('prof-brokerage').value = data.brokerage || '';
+      document.getElementById('prof-market').value = data.market || '';
+      
+      // Advanced Portfolio Info
+      document.getElementById('prof-role').value = data.role || '';
+      document.getElementById('prof-style').value = data.communication_style || '';
+      document.getElementById('prof-rules').value = data.strict_rules || '';
+    }
+  } catch (err) { console.error("Could not fetch profile:", err) }
+}
+
 async function saveProfile() {
   if (!currentUser) return;
   
@@ -154,17 +172,30 @@ async function saveProfile() {
     full_name: document.getElementById('prof-name').value.trim(),
     brokerage: document.getElementById('prof-brokerage').value.trim(),
     market: document.getElementById('prof-market').value.trim(),
+    
+    // New Portfolio Data
+    role: document.getElementById('prof-role').value.trim(),
+    communication_style: document.getElementById('prof-style').value.trim(),
+    strict_rules: document.getElementById('prof-rules').value.trim(),
+    
     updated_at: new Date()
   };
 
   const { error } = await sb.from('profiles').upsert(updates);
   
-  saveBtn.innerText = 'Save Profile';
+  saveBtn.innerText = 'Save Portfolio';
   saveBtn.disabled = false;
 
   if (!error) {
     const profileAlert = document.getElementById('profile-alert');
-    profileAlert.innerText = 'Profile saved successfully.';
+    profileAlert.innerText = 'Portfolio saved securely.';
     profileAlert.classList.remove('hidden');
+    
+    // Send updated session/profile to extension immediately
+    if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.sendMessage) {
+        chrome.runtime.sendMessage(EXTENSION_ID, { type: "LOGIN_SUCCESS", session: { user: currentUser } });
+    }
+  } else {
+      console.error(error);
   }
 }
